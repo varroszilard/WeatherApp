@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    x:Class="WeatherApp.View.WeatherStyle">
+    <Color x:Key="ButtonWhiteTextColor">White</Color>
+    <Color x:Key="ButtonBlueTextColor">Blue</Color>
+
+    <OnPlatform x:TypeArguments="x:Int32" x:Key="BorderRadiusButton">
+        <On Platform="iOS">20</On>
+        <On Platform="Android">45</On>
+    </OnPlatform>
+    
+    <Style x:Key="ButtonStyle" TargetType="Button">
+        <Setter Property="BorderRadius" Value="{StaticResource BorderRadiusButton}"/>
+        <Setter Property="TextColor" Value="{StaticResource ButtonWhiteTextColor}"/>
+        <Setter Property="BackgroundColor" Value="{StaticResource ButtonBlueTextColor}"/>
+    </Style>
+
+    <Style x:Key="NewLocationButton" TargetType="Button">
+        <Setter Property="BorderRadius" Value="{StaticResource BorderRadiusButton}"/>
+        <Setter Property="TextColor" Value="{StaticResource ButtonWhiteTextColor}"/>
+        <Setter Property="BackgroundColor" Value="{StaticResource ButtonBlueTextColor}"/>
+    </Style>
+</ResourceDictionary>

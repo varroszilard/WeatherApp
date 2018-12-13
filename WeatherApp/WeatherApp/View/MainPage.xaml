@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:WeatherApp"
+             xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:converter="clr-namespace:WeatherApp.Converter"
+             x:Class="WeatherApp.MainPage"
+             Title="Weather">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converter:VisibilityConverter x:Key="VisibilityConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <RelativeLayout>
+        <Image Source="main.png" Aspect="AspectFill" Opacity="0.5" 
+               RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}"
+               RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height}" />
+        <ff:CachedImage Source="loader.gif" Aspect="AspectFit" HorizontalOptions="Center" VerticalOptions="Center" 
+                        IsVisible="{Binding IsVisible, Converter={StaticResource VisibilityConverter}}"
+                         MinimumHeightRequest="300"  MinimumWidthRequest="300"
+               RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}"
+               RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height}" />
+        <Grid RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}"
+              RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            
+            <Label x:Name="Location" Text="{Binding Name}" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" FontSize="32"/>
+            <Label Text="{Binding Temperature}" Grid.Column="0" Grid.Row="1" FontSize="50"/>
+            
+            <StackLayout Grid.RowSpan="2" Grid.Column="1" Grid.Row="0">
+                <Image Source="{Binding Image}" HeightRequest="80" WidthRequest="80"/>
+                <Label Text="{Binding WeatherState}" HorizontalOptions="Center" FontSize="Medium"/>
+            </StackLayout>
+
+            <Grid Grid.ColumnSpan="2" Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Label Text="Min: " Grid.Column="0" Grid.Row="0" HorizontalOptions="StartAndExpand"/>
+                <Label Text="{Binding MinTemp}" Grid.Column="1" Grid.Row="0" HorizontalOptions="StartAndExpand"/>
+                <Label Text="Max: " Grid.Column="2" Grid.Row="0" HorizontalOptions="EndAndExpand"/>
+                <Label Text="{Binding MaxTemp}" Grid.Column="3" Grid.Row="0" HorizontalOptions="EndAndExpand"/>
+            </Grid>
+            
+
+            <Button Text="Change location" Clicked="OnChangeLocation" Grid.Column="0" Grid.Row="3" VerticalOptions="End" Style="{StaticResource ButtonStyle}"/>
+            <Button Text="Refresh" Clicked="OnRefresh" Grid.Column="1" Grid.Row="3" VerticalOptions="End" Style="{StaticResource ButtonStyle}"/>
+        </Grid>
+    </RelativeLayout>
+</ContentPage>

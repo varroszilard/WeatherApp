@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converter="clr-namespace:WeatherApp.Converter"
+             xmlns:behavior="clr-namespace:WeatherApp.Common.UI.Behaviors;assembly=WeatherApp.Common"
+             x:Class="WeatherApp.View.SelectLocation"
+             Title="Select location">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converter:BoolToBackgroundColorConverter x:Key="CurrentToBackgroundColorConverter"/>
+
+            <ControlTemplate x:Key="SelectLocationEntry">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="10*"/>
+                        <RowDefinition Height="90*"/>
+                    </Grid.RowDefinitions>
+
+                    <StackLayout VerticalOptions="StartAndExpand" Orientation="Horizontal" BackgroundColor="#222222" HeightRequest="45" Padding="0,15,0,5" IsClippedToBounds="True">
+                        <Label Text="Test"/>
+                    </StackLayout>
+
+                    <ContentPresenter Grid.Row="1" Margin="0,-7,0,0" IsClippedToBounds="True"/>
+                </Grid>
+            </ControlTemplate>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Entry x:Name="NewLocation"
+                               Placeholder="Add new location..." 
+                               HorizontalOptions="StartAndExpand" 
+                               Grid.Column="0"
+                               Grid.Row="0">
+            <Entry.Behaviors>
+                <behavior:LocationLengthValidationBehavior/>
+                <behavior:StringValidationBehavior/>
+            </Entry.Behaviors>
+        </Entry>
+        <Button Text="Search"
+                                Style="{StaticResource ButtonStyle}"
+                                Grid.Column="1"
+                                Grid.Row="0"
+                                HorizontalOptions="End"
+                                Clicked="NewLocationButton_Clicked"/>
+        <ListView ItemsSource="{Binding LocationList}" 
+                  ItemTapped="OnSetLocation"
+                  Grid.Column="0"
+                  Grid.Row="1"
+                  Grid.ColumnSpan="2"
+                  VerticalOptions="Fill">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <ContentView>
+                            <StackLayout>
+                                <Label Text="{Binding Name}" FontSize="20" BackgroundColor="{Binding IsCurrent, Converter={StaticResource CurrentToBackgroundColorConverter}}"/>
+                            </StackLayout>
+                        </ContentView>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+</ContentPage>

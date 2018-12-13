@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WeatherApp.Common.UI.ContentViews.CustomButton">
+  <ContentView.Content>
+        <StackLayout Orientation="Horizontal" 
+                     BackgroundColor="Black" 
+                     WidthRequest="100" 
+                     HeightRequest="30">
+            <StackLayout.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnTextTapped"/>
+            </StackLayout.GestureRecognizers>
+            <Label x:Name="number"
+                   TextColor="Yellow"
+                   Text="1"/>
+            <Label x:Name="title"
+                   TextColor="Yellow"
+                   Text="CustomSomething"
+                   />
+        </StackLayout>
+    </ContentView.Content>
+</ContentView>
