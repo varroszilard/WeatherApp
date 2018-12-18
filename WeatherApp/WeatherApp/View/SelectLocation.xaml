@@ -5,6 +5,11 @@
              xmlns:behavior="clr-namespace:WeatherApp.Common.UI.Behaviors;assembly=WeatherApp.Common"
              x:Class="WeatherApp.View.SelectLocation"
              Title="Select location">
+    <ContentPage.Padding>
+        <OnPlatform x:TypeArguments="Thickness">
+            <On Platform="iOS" Value="0, 20, 0, 0"/>
+        </OnPlatform>
+    </ContentPage.Padding>
     <ContentPage.Resources>
         <ResourceDictionary>
             <converter:BoolToBackgroundColorConverter x:Key="CurrentToBackgroundColorConverter"/>
@@ -16,7 +21,7 @@
                         <RowDefinition Height="90*"/>
                     </Grid.RowDefinitions>
 
-                    <StackLayout VerticalOptions="StartAndExpand" Orientation="Horizontal" BackgroundColor="#222222" HeightRequest="45" Padding="0,15,0,5" IsClippedToBounds="True">
+                    <StackLayout VerticalOptions="StartAndExpand" Orientation="Horizontal" BackgroundColor="#222222" HeightRequest="45" Padding="15,15,0,5" IsClippedToBounds="True">
                         <Label Text="Test"/>
                     </StackLayout>
 
@@ -27,7 +32,7 @@
     </ContentPage.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -36,7 +41,6 @@
         </Grid.RowDefinitions>
         <Entry x:Name="NewLocation"
                                Placeholder="Add new location..." 
-                               HorizontalOptions="StartAndExpand" 
                                Grid.Column="0"
                                Grid.Row="0">
             <Entry.Behaviors>
@@ -48,7 +52,6 @@
                                 Style="{StaticResource ButtonStyle}"
                                 Grid.Column="1"
                                 Grid.Row="0"
-                                HorizontalOptions="End"
                                 Clicked="NewLocationButton_Clicked"/>
         <ListView ItemsSource="{Binding LocationList}" 
                   ItemTapped="OnSetLocation"

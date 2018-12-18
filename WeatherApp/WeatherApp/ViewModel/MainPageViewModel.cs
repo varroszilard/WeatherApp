@@ -49,7 +49,7 @@ namespace WeatherApp.ViewModel
                 {
                     var currLocation = await GetLocationWoeid(location.Name);
 
-                    if (currLocation.Woeid == 0)
+                    if (currLocation == null || currLocation.Woeid == 0)
                     {
                         MessagingCenter.Send<MainPageViewModel, string>(this, "LocationNotFound", location.Name);
 

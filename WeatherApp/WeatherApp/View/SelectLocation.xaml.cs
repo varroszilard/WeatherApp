@@ -27,7 +27,7 @@ namespace WeatherApp.View
 
 			InitializeComponent ();
 
-            NavigationPage.SetHasNavigationBar(this, false);
+            NavigationPage.SetHasNavigationBar(this, true);
 		}
 
         protected override async void OnAppearing()
