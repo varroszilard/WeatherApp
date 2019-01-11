@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:converter="clr-namespace:WeatherApp.Converter"
              xmlns:behavior="clr-namespace:WeatherApp.Common.UI.Behaviors;assembly=WeatherApp.Common"
-             x:Class="WeatherApp.View.SelectLocation"
+             x:Class="WeatherApp.View.Master.SelectLocation"
              Title="Select location">
     <ContentPage.Padding>
         <OnPlatform x:TypeArguments="Thickness">
@@ -42,7 +42,8 @@
         <Entry x:Name="NewLocation"
                                Placeholder="Add new location..." 
                                Grid.Column="0"
-                               Grid.Row="0">
+                               Grid.Row="0" 
+                               AutomationId="AddNewLocationId">
             <Entry.Behaviors>
                 <behavior:LocationLengthValidationBehavior/>
                 <behavior:StringValidationBehavior/>
@@ -58,7 +59,8 @@
                   Grid.Column="0"
                   Grid.Row="1"
                   Grid.ColumnSpan="2"
-                  VerticalOptions="Fill">
+                  VerticalOptions="Fill"
+                  AutomationId="LocationListId">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>

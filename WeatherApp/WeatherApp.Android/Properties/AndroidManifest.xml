@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionName="1.1" package="com.WeatherApp" android:installLocation="auto" android:versionCode="180409">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionName="1.1" package="com.WeatherApp" android:installLocation="auto" android:versionCode="190108">
 	<uses-sdk android:minSdkVersion="19" android:targetSdkVersion="27" />
+	<uses-permission android:name="android.permission.VIBRATE" />
 	<application android:label="WeatherApp"></application>
 </manifest>

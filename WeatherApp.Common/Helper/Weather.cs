@@ -6,9 +6,9 @@ namespace WeatherApp.Common.Helper
 {
     public class Weather
     {
-        public static async void GetWeatherAsync()
-        {
+        //public static async void GetWeatherAsync()
+        //{
 
-        }
+        //}
     }
 }

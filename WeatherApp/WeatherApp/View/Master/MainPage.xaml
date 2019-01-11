@@ -4,7 +4,8 @@
              xmlns:local="clr-namespace:WeatherApp"
              xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              xmlns:converter="clr-namespace:WeatherApp.Converter"
-             x:Class="WeatherApp.MainPage"
+             xmlns:cv="clr-namespace:CarouselView;assembly=Carouselview"
+             x:Class="WeatherApp.View.Master.MainPage"
              Title="Weather">
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -30,15 +31,16 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             
-            <Label x:Name="Location" Text="{Binding Name}" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" FontSize="32"/>
-            <Label Text="{Binding Temperature}" Grid.Column="0" Grid.Row="1" FontSize="50"/>
+            <Label x:Name="Location" Text="{Binding Name}" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" FontSize="32" AutomationId="LocationId"/>
+            <Label Text="{Binding Temperature}" Grid.Column="0" Grid.Row="1" FontSize="50" AutomationId="TemperatureId"/>
             
             <StackLayout Grid.RowSpan="2" Grid.Column="1" Grid.Row="0">
-                <Image Source="{Binding Image}" HeightRequest="80" WidthRequest="80"/>
-                <Label Text="{Binding WeatherState}" HorizontalOptions="Center" FontSize="Medium"/>
+                <Image Source="{Binding Image}" HeightRequest="80" WidthRequest="80" AutomationId="WeatherImageId"/>
+                <Label Text="{Binding WeatherState}" HorizontalOptions="Center" FontSize="Medium" AutomationId="WeatherStateId"/>
             </StackLayout>
 
             <Grid Grid.ColumnSpan="2" Grid.Row="2">
@@ -53,14 +55,25 @@
                 </Grid.RowDefinitions>
 
                 <Label Text="Min: " Grid.Column="0" Grid.Row="0" HorizontalOptions="StartAndExpand"/>
-                <Label Text="{Binding MinTemp}" Grid.Column="1" Grid.Row="0" HorizontalOptions="StartAndExpand"/>
+                <Label Text="{Binding MinTemp}" Grid.Column="1" Grid.Row="0" HorizontalOptions="StartAndExpand" AutomationId="MinTempId"/>
                 <Label Text="Max: " Grid.Column="2" Grid.Row="0" HorizontalOptions="EndAndExpand"/>
-                <Label Text="{Binding MaxTemp}" Grid.Column="3" Grid.Row="0" HorizontalOptions="EndAndExpand"/>
+                <Label Text="{Binding MaxTemp}" Grid.Column="3" Grid.Row="0" HorizontalOptions="EndAndExpand" AutomationId="MaxTempId"/>
             </Grid>
-            
 
-            <Button Text="Change location" Clicked="OnChangeLocation" Grid.Column="0" Grid.Row="3" VerticalOptions="End" Style="{StaticResource ButtonStyle}"/>
-            <Button Text="Refresh" Clicked="OnRefresh" Grid.Column="1" Grid.Row="3" VerticalOptions="End" Style="{StaticResource ButtonStyle}"/>
+            <StackLayout Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" BackgroundColor="AliceBlue">
+                <ListView x:Name="weatherList" HasUnevenRows="True" ItemsSource="WeatherList">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Label Text="{Binding Temperature}"/>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+
+            <Button Text="Change location" Clicked="OnChangeLocation" Grid.Column="0" Grid.Row="4" VerticalOptions="End" Style="{StaticResource ButtonStyle}" AutomationId="ChangeLocationButtonId"/>
+            <Button Text="Refresh" Clicked="OnRefresh" Grid.Column="1" Grid.Row="4" VerticalOptions="End" Style="{StaticResource ButtonStyle}" AutomationId="RefreshButtonId"/>
         </Grid>
     </RelativeLayout>
 </ContentPage>

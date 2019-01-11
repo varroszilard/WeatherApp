@@ -1,11 +1,11 @@
-﻿using Android.App;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using WeatherApp.ViewModel;
 using Xamarin.Forms;
+using Xamarin.Essentials;
 
 namespace WeatherApp.BackgroundServices
 {
@@ -20,6 +20,7 @@ namespace WeatherApp.BackgroundServices
                     token.ThrowIfCancellationRequested();
 
                     await Task.Delay(10000);
+                    //Vibration.Vibrate(TimeSpan.FromMilliseconds(10));
 
                     //refresh weather here
                     Device.BeginInvokeOnMainThread(() =>

@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WeatherApp.Common.UI.ContentViews.MenuButton">
+    <ContentView.Content>
+        <StackLayout Orientation="Horizontal">
+            <StackLayout.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnMenuTapped"/>
+            </StackLayout.GestureRecognizers>
+            <Image x:Name="MenuIcon"
+                   Source="default"
+                   HeightRequest="25"
+                   HorizontalOptions="Start"/>
+            <Label x:Name="MenuText"
+                   Text="default"
+                   HorizontalOptions="StartAndExpand"/>
+        </StackLayout>
+    </ContentView.Content>
+</ContentView>

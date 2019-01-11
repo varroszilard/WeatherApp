@@ -26,15 +26,15 @@ namespace WeatherApp.ViewModel
             Navigation = navigation;
 
             await Task.Run(() =>
-             {
-                 locationRepository = DependencyService.Get<ILocationRepository>();
-                 var list = locationRepository.GetAll().ToList().OrderBy(o => o.Name);
+            {
+                locationRepository = DependencyService.Get<ILocationRepository>();
+                var list = locationRepository.GetAll().ToList().OrderBy(o => o.Name);
 
-                 foreach (var item in list)
-                 {
-                     LocationList.Add(new Location { Name = item.Name, IsCurrent = item.IsCurrent });
-                 }
-             });
+                foreach (var item in list)
+                {
+                    LocationList.Add(new Location { Name = item.Name, IsCurrent = item.IsCurrent });
+                }
+            });
         }
 
         public async Task SetLocation(Location location)
@@ -74,7 +74,7 @@ namespace WeatherApp.ViewModel
                     await LocationHelper.GetWeatherAsync();
 
                     return LocationStatus.Found;
-                } 
+                }
             }
             else
             {

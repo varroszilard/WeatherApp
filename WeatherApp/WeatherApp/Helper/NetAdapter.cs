@@ -8,7 +8,6 @@ using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Android.Util;
 
 namespace WeatherApp.Helper
 {

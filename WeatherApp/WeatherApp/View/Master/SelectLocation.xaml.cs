@@ -13,7 +13,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using static WeatherApp.Collection.Enumeration;
 
-namespace WeatherApp.View
+namespace WeatherApp.View.Master
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class SelectLocation : ContentPage
@@ -22,25 +22,42 @@ namespace WeatherApp.View
         public SelectLocation ()
 		{
             vm = new SetLocationViewModel();
-
             BindingContext = vm;
-
 			InitializeComponent ();
 
-            NavigationPage.SetHasNavigationBar(this, true);
+            NavigationPage.SetHasBackButton(this, false);
+            NavigationPage.SetHasNavigationBar(this, false);
 		}
+
+
 
         protected override async void OnAppearing()
         {
-            base.OnAppearing();
+            try
+            {
+                base.OnAppearing();
+                await vm.Init(Navigation);
+            }
+            catch(Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e.Message);
+            }
+        }
 
-            await vm.Init(Navigation);
+        protected override bool OnBackButtonPressed()
+        {
+            Navigation.PopAsync();
+            return base.OnBackButtonPressed();
         }
 
         private async Task OnSetLocation(object sender, ItemTappedEventArgs e)
         {
-            await vm.SetLocation(e.Item as Location);
-            await Navigation.PopAsync();
+            try
+            {
+                await vm.SetLocation(e.Item as Location);
+                await MasterWeather.Instance.Detail.Navigation.PopAsync(true);
+            }
+            catch (Exception ex) { }
         }
 
         private async Task NewLocationButton_Clicked(object sender, EventArgs e)

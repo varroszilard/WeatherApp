@@ -21,4 +21,7 @@
         <Setter Property="TextColor" Value="{StaticResource ButtonWhiteTextColor}"/>
         <Setter Property="BackgroundColor" Value="{StaticResource ButtonBlueTextColor}"/>
     </Style>
+
+    <LayoutOptions x:Key="horzOptions"
+                   Alignment="Center"/>
 </ResourceDictionary>

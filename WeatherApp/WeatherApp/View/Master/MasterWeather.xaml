@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<MasterDetailPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WeatherApp.View.Master.MasterWeather"
+             xmlns:cmb="clr-namespace:WeatherApp.Common.UI.ContentViews;assembly=WeatherApp.Common"
+             xmlns:pages="clr-namespace:WeatherApp.View.Master">
+    <MasterDetailPage.Master>
+        <ContentPage Title="Master">
+            <ContentPage.Content>
+                <StackLayout Orientation="Vertical">
+                    <Frame x:Name="TemperaturePreference">
+                        <StackLayout Orientation="Horizontal">
+                            <Button x:Name="Celsius"
+                                Text="C°"
+                                Clicked="OnCelsiusClicked"
+                                    HorizontalOptions="CenterAndExpand"/>
+                            <Button x:Name="Fahrenheit"
+                                Text="F°"
+                                Clicked="OnFahrenheitClicked"
+                                    HorizontalOptions="CenterAndExpand"/>
+                        </StackLayout>
+                    </Frame>
+                    <cmb:MenuButton ImageIcon="hand2.png"
+                        TargetType="SelectLocation"
+                        MyMenuText="Select location"
+                        OnMenuButtonTapped="OnSelectedMenuButton"/>
+                    <cmb:MenuButton ImageIcon="hand2.png"
+                        TargetType="About"
+                        MyMenuText="About"
+                        OnMenuButtonTapped="OnSelectedMenuButton"/>
+                    <cmb:MenuButton ImageIcon="hand2.png"
+                        TargetType="Version"
+                        MyMenuText="Version"
+                        OnMenuButtonTapped="OnSelectedMenuButton"/>
+                </StackLayout>
+            </ContentPage.Content>
+        </ContentPage>
+    </MasterDetailPage.Master>
+    <!--<MasterDetailPage.Detail>
+        <NavigationPage>
+            <x:Arguments>
+                <CarouselPage PagesChanged="OnPageChanged">
+                    <pages:WeatherDetails />
+                    <pages:MainPage/>
+                </CarouselPage>
+            </x:Arguments>
+        </NavigationPage>
+    </MasterDetailPage.Detail>-->
+</MasterDetailPage>

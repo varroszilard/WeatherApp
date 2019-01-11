@@ -4,12 +4,13 @@ using DAL.Repository.Weather;
 using PCLAppConfig;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WeatherApp.Model.ApiModels;
-using WeatherApp.View;
+using WeatherApp.View.Master;
 using Xamarin.Forms;
 
 namespace WeatherApp.Helper
@@ -29,13 +30,54 @@ namespace WeatherApp.Helper
             {
                 url = Path.Combine(ConfigurationManager.AppSettings["BaseURL"], ConfigurationManager.AppSettings["Woeid"]);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Console.WriteLine(e.Message);
             }
             RootObject weatherDetails = await NetAdapter.Instance.GetAsync<RootObject>(url, new { woeid });
 
             return SaveWeather(weatherDetails.Consolidated_weather.OrderBy(date => date.Applicable_date).FirstOrDefault(), location);
+        }
+
+        public async static Task<ObservableCollection<DAL.Entities.Weather>> GetMultipleDaysWeatherForecast()
+        {
+            var locationRepository = DependencyService.Get<ILocationRepository>();
+            var location = locationRepository.GetAll().FirstOrDefault(l => l.IsCurrent);
+
+            var woeid = location.Woeid;
+            var url = String.Empty;
+
+            try
+            {
+                url = Path.Combine(ConfigurationManager.AppSettings["BaseURL"], ConfigurationManager.AppSettings["Woeid"]);
+            }
+            catch (Exception e)
+            {
+#if DEBUG
+                System.Diagnostics.Debug.WriteLine(e.Message);
+#endif
+            }
+
+            RootObject weatherDetails = await NetAdapter.Instance.GetAsync<RootObject>(url, new { woeid });
+
+            var list = new List<DAL.Entities.Weather>();
+
+            foreach (var w in weatherDetails.Consolidated_weather)
+            {
+                var weatherE = new DAL.Entities.Weather
+                {
+                    Image = w.Weather_state_abbr + ".png",
+                    LocationId = location.Id,
+                    Temperature = (int)w.The_temp,
+                    WeatherState = w.Weather_state_name,
+                    MinTemp = (int)w.Min_temp,
+                    MaxTemp = (int)w.Max_temp
+                };
+
+                list.Add(weatherE);
+            }
+
+            return new ObservableCollection<Weather>(list);
         }
 
         public async static Task<Location> GetLocationWoeid(string query, INavigation navigation = null)
@@ -95,8 +137,8 @@ namespace WeatherApp.Helper
                 LocationId = location.Id,
                 Temperature = (int)weather.The_temp,
                 WeatherState = weather.Weather_state_name,
-                MinTemp = (int) weather.Min_temp,
-                MaxTemp = (int) weather.Max_temp
+                MinTemp = (int)weather.Min_temp,
+                MaxTemp = (int)weather.Max_temp
             };
 
             weatherRepository.Insert(weatherToDb);

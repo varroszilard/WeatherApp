@@ -12,18 +12,19 @@ using WeatherApp.View;
 using WeatherApp.ViewModel;
 using Xamarin.Forms;
 
-namespace WeatherApp
+namespace WeatherApp.View.Master
 {
     public partial class MainPage : ContentPage
     {
         private MainPageViewModel vm;
+        
 
         public MainPage()
         {
             vm = new MainPageViewModel();
 
             BindingContext = vm;
-            
+
             MessagingCenter.Subscribe<MainPageViewModel, string>(this, "LocationNotFound", (sender, arg) =>
             {
                 DisplayAlert($"{arg} not found!", "Please try again later...", "Ok");
@@ -45,13 +46,13 @@ namespace WeatherApp
         }
 
 
-        private async void HandleReceivedMessages()
+        private void HandleReceivedMessages()
         {
             MessagingCenter.Subscribe<RefreshWeather>(this, typeof(RefreshWeather).FullName, sender =>
             {
-                Device.BeginInvokeOnMainThread(() =>
+                Device.BeginInvokeOnMainThread(async () =>
                 {
-                    vm.GetWeatherAsync();
+                    await vm.GetWeatherAsync();
                 });
             });
         }
@@ -89,7 +90,7 @@ namespace WeatherApp
             if (CrossConnectivity.Current.IsConnected)
             {
                 //api call to refresh weather
-                vm.GetWeatherAsync();
+                await vm.GetWeatherAsync();
             }
             else
             {

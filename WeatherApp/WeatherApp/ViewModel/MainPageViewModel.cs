@@ -13,6 +13,7 @@ using DAL.Repository.Location;
 using Xamarin.Forms;
 using DAL.Repository.Weather;
 using DAL.Entities;
+using System.Collections.ObjectModel;
 
 namespace WeatherApp.ViewModel
 {
@@ -51,7 +52,7 @@ namespace WeatherApp.ViewModel
 
                     if (currLocation == null || currLocation.Woeid == 0)
                     {
-                        MessagingCenter.Send<MainPageViewModel, string>(this, "LocationNotFound", location.Name);
+                        MessagingCenter.Send(this, "LocationNotFound", location.Name);
 
                         locationRepository.DeselectCurrentLocation();
 
@@ -67,7 +68,7 @@ namespace WeatherApp.ViewModel
 
                 Name = location.Name;
 
-                GetWeatherAsync();
+                await GetWeatherAsync();
             }
             finally
             {
@@ -87,6 +88,7 @@ namespace WeatherApp.ViewModel
 
         public string MinTemp { get; set; }
         public string MaxTemp { get; set; }
+        public ObservableCollection<DAL.Entities.Weather> WeatherList { get; set; }
 
         public async Task<DAL.Entities.Location> GetLocationWoeid(string _location)
         {
@@ -118,6 +120,10 @@ namespace WeatherApp.ViewModel
                 WeatherState = weather.WeatherState;
                 MinTemp = $"{weather.MinTemp}°C";
                 MaxTemp = $"{weather.MaxTemp}°C";
+
+                WeatherList = await LocationHelper.GetMultipleDaysWeatherForecast();
+
+                
             }
             finally
             {

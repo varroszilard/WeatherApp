@@ -3,8 +3,9 @@ using DAL.Repository.Location;
 using PCLAppConfig;
 using SQLite.Net;
 using System;
+using WeatherApp.BackgroundServices;
 using WeatherApp.Helper;
-using WeatherApp.View;
+using WeatherApp.View.Master;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -19,7 +20,7 @@ namespace WeatherApp
 
             ConfigurationManager.Initialise(PCLAppConfig.FileSystemStream.PortableStream.Current);
 
-            MainPage = new NavigationPage(new MainPage());
+            MainPage = new MasterWeather();
 		}
 
 		protected override void OnStart ()
@@ -29,12 +30,18 @@ namespace WeatherApp
 
 		protected override void OnSleep ()
 		{
-			// Handle when your app sleeps
-		}
+            StopRefreshWeather();
+        }
 
 		protected override void OnResume ()
 		{
-			// Handle when your app resumes
-		}
-	}
+            MessagingCenter.Send(new StartRefreshWeather(), typeof(StartRefreshWeather).FullName);
+
+        }
+
+        private void StopRefreshWeather()
+        {
+            MessagingCenter.Send(new StopRefreshWeather(), typeof(StopRefreshWeather).FullName);
+        }
+    }
 }

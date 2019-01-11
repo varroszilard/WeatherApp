@@ -7,14 +7,15 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace WeatherApp.View
+namespace WeatherApp.View.Master
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class SelectOneLocation : ContentPage
+	public partial class About : ContentPage
 	{
-		public SelectOneLocation ()
+		public About ()
 		{
 			InitializeComponent ();
-		}
+            NavigationPage.SetHasBackButton(this, false);
+        }
 	}
 }
