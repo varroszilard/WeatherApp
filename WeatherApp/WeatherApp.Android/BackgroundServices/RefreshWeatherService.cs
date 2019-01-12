@@ -34,7 +34,9 @@ namespace WeatherApp.Droid.BackgroundServices
                     var refreshTask = new RefreshWeatherTaskService();
                     refreshTask.RunTask(_cts.Token).Wait();
                 }
-                catch (Exception e) { }
+                catch (Exception e) {
+                    System.Diagnostics.Debug.WriteLine(e);
+                }
                 finally
                 {
                     if (_cts.IsCancellationRequested)

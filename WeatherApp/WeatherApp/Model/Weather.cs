@@ -12,5 +12,6 @@ namespace WeatherApp.Model
         public string WeatherState { get; set; }
         public string MinTemp { get; set; }
         public string MaxTemp { get; set; }
+        public string ForecastDate { get; set; }
     }
 }

@@ -16,8 +16,7 @@ namespace WeatherApp.View.Master
 {
     public partial class MainPage : ContentPage
     {
-        private MainPageViewModel vm;
-        
+        MainPageViewModel vm;
 
         public MainPage()
         {
@@ -96,6 +95,11 @@ namespace WeatherApp.View.Master
             {
                 await DisplayAlert("No internet connectivity!", "Please try again later...", "Ok");
             }
+        }
+
+        private void WeatherList_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+
         }
     }
 }

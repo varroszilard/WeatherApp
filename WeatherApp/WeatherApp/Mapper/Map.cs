@@ -27,5 +27,17 @@ namespace WeatherApp.Mapper
 
             return location;
         }
+
+        public static Model.Weather Mapper(DAL.Entities.Weather _weather)
+        {
+            return new Model.Weather
+            {
+                Image = _weather.Image,
+                MaxTemp = $"{_weather.MaxTemp.ToString()}°C",
+                MinTemp = $"{_weather.MinTemp.ToString()}°C",
+                Temperature = $"{_weather.Temperature.ToString()}°C",
+                WeatherState = _weather.WeatherState
+            };
+        }
     }
 }

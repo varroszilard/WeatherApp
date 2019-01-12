@@ -24,12 +24,12 @@ namespace WeatherApp.View.Master
 
         private async void OnCelsiusClicked(object sender, EventArgs e)
         {
-
+            await Task.Run(() => { });
         }
 
         private async void OnFahrenheitClicked(object sender, EventArgs e)
         {
-
+            await Task.Run(() => { });
         }
 
         private async void OnSelectedMenuButton(object sender, EventArgs e)

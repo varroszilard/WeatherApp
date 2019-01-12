@@ -14,6 +14,7 @@ using Xamarin.Forms;
 using DAL.Repository.Weather;
 using DAL.Entities;
 using System.Collections.ObjectModel;
+using WeatherApp.Mapper;
 
 namespace WeatherApp.ViewModel
 {
@@ -77,18 +78,13 @@ namespace WeatherApp.ViewModel
         }
 
         public string Name { get; set; }
-
         public string Temperature { get; set; }
-
         public string Image { get; set; }
-
         public string WeatherState { get; set; }
-
         public bool IsVisible { get; set; }
-
         public string MinTemp { get; set; }
         public string MaxTemp { get; set; }
-        public ObservableCollection<DAL.Entities.Weather> WeatherList { get; set; }
+        public ObservableCollection<Model.Weather> WeatherList { get; set; } = new ObservableCollection<Model.Weather>();
 
         public async Task<DAL.Entities.Location> GetLocationWoeid(string _location)
         {
@@ -121,9 +117,31 @@ namespace WeatherApp.ViewModel
                 MinTemp = $"{weather.MinTemp}°C";
                 MaxTemp = $"{weather.MaxTemp}°C";
 
-                WeatherList = await LocationHelper.GetMultipleDaysWeatherForecast();
+                var weatherList = await LocationHelper.GetMultipleDaysWeatherForecast();
+                WeatherList = new ObservableCollection<Model.Weather>();
+                var date = DateTime.Now;
+                var dayNr = 0;
+                foreach (var w in weatherList)
+                {
+                    var weatherForecastItem = Map.Mapper(w);
 
-                
+                    if(dayNr > 1)
+                    {
+                        weatherForecastItem.ForecastDate = date.AddDays(dayNr).ToShortDateString();
+                    }
+                    else
+                    {
+                        if(dayNr == 0)
+                            weatherForecastItem.ForecastDate = "Today";
+
+                        if (dayNr == 1)
+                            weatherForecastItem.ForecastDate = "Tomorrow";
+                    }
+
+                    dayNr++;
+
+                    WeatherList.Add(weatherForecastItem);
+                }
             }
             finally
             {
